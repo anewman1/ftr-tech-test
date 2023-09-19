@@ -1,0 +1,71 @@
+<div class="container">
+  <form
+    (ngSubmit)="onSubmitFrequency()"
+    #frequencyForm="ngForm"
+    [hidden]="frequency !== 0 && timerControl.touched"
+    id="frequencyForm-testId"
+  >
+    <div class="field">
+      <label class="label">
+        What frequency (in seconds) would you like your input to be displayed?
+      </label>
+      <input
+        class="input"
+        type="number"
+        name="setTimer"
+        required
+        [(ngModel)]="frequencyInput"
+        #timerControl="ngModel"
+        placeholder="Must be a positive number"
+      />
+      <p *ngIf="!validNumber && frequency === 0" class="help is-danger">
+        Value must be a positive number
+      </p>
+    </div>
+    <button
+      class="button is-primary"
+      [disabled]="timerControl.errors || !timerControl.value"
+    >
+      Submit timer
+    </button>
+  </form>
+  <div *ngIf="frequency !== 0">Timer is set to {{ frequency }}</div>
+  <form
+    (ngSubmit)="onSubmitNumber()"
+    #inputForm="ngForm"
+    [hidden]="frequency === 0"
+    id="inputForm-testId"
+  >
+    <div class="field">
+      <label class="label">
+        Please enter the
+        {{ userInputState.length === 0 ? "first number" : "next number" }}
+      </label>
+      <input
+        class="input"
+        type="number"
+        name="setUserInput"
+        required
+        [(ngModel)]="userInput"
+        #userInputControl="ngModel"
+        placeholder="Must be a positive number"
+      />
+      <p *ngIf="!validNumber && frequency !== 0" class="help is-danger">
+        Value must be a positive number
+      </p>
+    </div>
+    <div>
+      <button #pauseButton class="button" type="button">Halt</button>
+      <button #resumeButton class="button" type="button">Resume</button>
+    </div>
+
+    <button
+      class="button is-primary"
+      type="submit"
+      [disabled]="userInputControl.errors || !userInputControl.value"
+    >
+      Submit
+    </button>
+  </form>
+  <div #userInputDisplay id="inputDisplay-test"></div>
+</div>
